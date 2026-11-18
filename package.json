@@ -1,0 +1,31 @@
+{
+  "name": "parsity-agent-kit",
+  "version": "1.0.0",
+  "description": "Free starter repo: chunk -> embed -> vector DB -> retrieve -> rerank -> answer, plus a SQL path and a form-filling structured-output demo.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "chunks": "tsx src/inspect-chunks.ts",
+    "ingest": "tsx src/ingest.ts",
+    "query": "tsx src/query.ts",
+    "fill-form": "tsx src/fill-form.ts",
+    "sql:seed": "tsx src/sql/seed.ts",
+    "sql:ask": "tsx src/sql/ask.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@qdrant/js-client-rest": "^1.12.0",
+    "better-sqlite3": "^11.7.0",
+    "dotenv": "^16.4.5",
+    "openai": "^4.77.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
