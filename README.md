@@ -1,4 +1,4 @@
-# Parsity Agent Kit: RAG, Structured Outputs & SQL
+# Parsity Agent Kit: RAG, Structured Outputs, SQL & Voice
 
 A free, hackable starter from Brian Jenney ([Parsity](https://parsity.io/ai-dev)).
 
@@ -8,8 +8,9 @@ It's the pipeline behind almost every production RAG app and agent:
 text -> chunk -> embed (OpenAI) -> store (Qdrant + metadata) -> retrieve -> rerank -> answer (structured output)
 ```
 
-It also includes the two things most tutorials skip: **filling out a form with structured outputs**,
-and **asking whether you even need a vector database** (sometimes you just need SQL).
+It also includes the things most tutorials skip: **filling out a form with structured outputs**,
+**asking whether you even need a vector database** (sometimes you just need SQL), and
+**putting the whole thing on the phone** as a voice agent.
 
 ## Quickstart (~5 minutes)
 
@@ -36,6 +37,12 @@ npm run sql:seed                       # creates jobs.db (60 fake AI job posting
 npm run sql:ask -- "average max salary for remote roles by city"
 ```
 
+Voice agent (the RAG pipeline answering a phone line). Start in text mode, then follow `VOICE.md` to put it on Retell:
+
+```bash
+npm run voice:chat                     # text-mode phone call, same prompt and tools
+```
+
 ## What's in here
 
 | File | What it teaches |
@@ -46,6 +53,8 @@ npm run sql:ask -- "average max salary for remote roles by city"
 | `src/query.ts` | Vector search, metadata filters, score thresholds, over-fetch + rerank, cited answers, human-in-the-loop flag |
 | `src/fill-form.ts` | Structured outputs with Zod: the schema *is* the form |
 | `src/sql/ask.ts` | Text-to-SQL with read-only guardrails, for when vectors are the wrong tool |
+| `src/voice/` | A Retell phone agent that answers from your docs, takes messages, and flags emergencies |
+| `VOICE.md` | How Retell works, setup, and the lessons from shipping voice agents to clients |
 | `PROJECTS.md` | What to build, starting inside your own company |
 | `DATA_SOURCES.md` | Where to find data, easy mode and hard mode |
 
@@ -104,6 +113,7 @@ All of them do the core job. Pick one, learn the concepts, and swapping later is
 - Add LangSmith tracing (`LANGSMITH_TRACING=true` + their OpenAI wrapper) to see cost and latency per step.
 - Write 20 eval questions with expected answers and run them every time you change chunking or prompts.
 - Turn `query.ts` into an agent: let the LLM decide *which* tool to call (vector search vs SQL vs web search).
+- Put it on the phone: `VOICE.md`.
 - Pick a project from `PROJECTS.md` and take it all the way to production.
 
 ---

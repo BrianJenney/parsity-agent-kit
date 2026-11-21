@@ -18,7 +18,7 @@ production instead of starting five demos.
 |---|---|---|
 | **Form filler** | Reads emails/PDFs/call notes, fills the form your team retypes by hand. Missing fields get asked, not guessed. | Pure time savings. Easy to measure. See `src/fill-form.ts`. |
 | **Chatbot + human in the loop** | RAG over internal docs that escalates to a person when confidence is low, and learns from the human's answer. | A plain chatbot is table stakes now. One that knows when to hand off is something a company trusts. |
-| **Voice AI on top** | Same agent, but it answers the phone: after-hours support, appointment booking, lead qualification. | Not enough developers are touching voice. Speed to lead = money. |
+| **Voice AI on top** | Same agent, but it answers the phone: after-hours support, appointment booking, lead qualification. | Not enough developers are touching voice. Speed to lead = money. See `VOICE.md`. |
 | **Text-to-SQL for ops** | "How many orders shipped late last week by region?" against a read-only replica. | Every ops/finance person wants this. See `src/sql/ask.ts`. |
 | **Internal search that cites sources** | Search across wikis, tickets, Slack exports with metadata filters (team, date, doc type). | Onboarding and support teams feel it in week one. |
 
