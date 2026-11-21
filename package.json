@@ -1,7 +1,7 @@
 {
   "name": "parsity-agent-kit",
   "version": "1.0.0",
-  "description": "Free starter repo: chunk -> embed -> vector DB -> retrieve -> rerank -> answer, plus a SQL path and a form-filling structured-output demo.",
+  "description": "Free starter repo: chunk -> embed -> vector DB -> retrieve -> rerank -> answer, plus a SQL path, a form-filling structured-output demo, and a Retell voice agent on top of the RAG pipeline.",
   "type": "module",
   "private": true,
   "scripts": {
@@ -13,6 +13,10 @@
     "fill-form": "tsx src/fill-form.ts",
     "sql:seed": "tsx src/sql/seed.ts",
     "sql:ask": "tsx src/sql/ask.ts",
+    "voice:chat": "tsx src/voice/chat.ts",
+    "voice:server": "tsx src/voice/server.ts",
+    "voice:deploy": "tsx src/voice/deploy.ts",
+    "voice:call": "tsx src/voice/call-me.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,6 +24,7 @@
     "better-sqlite3": "^11.7.0",
     "dotenv": "^16.4.5",
     "openai": "^4.77.0",
+    "retell-sdk": "^6.2.22",
     "zod": "^3.24.1"
   },
   "devDependencies": {
