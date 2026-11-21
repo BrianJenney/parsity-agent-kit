@@ -4,3 +4,4 @@ qdrant_storage
 *.db
 voice-messages.jsonl
 voice-calls.jsonl
+data/bible/

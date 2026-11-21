@@ -37,6 +37,17 @@ npm run sql:seed                       # creates jobs.db (60 fake AI job posting
 npm run sql:ask -- "average max salary for remote roles by city"
 ```
 
+Chunking challenge (chunk the whole King James Bible your way, then search it). Full instructions in `BIBLE.md`:
+
+```bash
+npm run bible:fetch                    # downloads the KJV into data/bible/
+npm run bible:fixed                    # the naive way, so you can see what breaks
+npm run bible:smart                    # your chunker (you write it)
+npm run bible:audit -- data/bible/chunks-smart.jsonl
+npm run bible:ingest -- data/bible/chunks-smart.jsonl --reset
+COLLECTION=bible-kjv npm run query -- "verses about not worrying" --rerank
+```
+
 Voice agent (the RAG pipeline answering a phone line). Start in text mode, then follow `VOICE.md` to put it on Retell:
 
 ```bash
@@ -53,6 +64,7 @@ npm run voice:chat                     # text-mode phone call, same prompt and t
 | `src/query.ts` | Vector search, metadata filters, score thresholds, over-fetch + rerank, cited answers, human-in-the-loop flag |
 | `src/fill-form.ts` | Structured outputs with Zod: the schema *is* the form |
 | `src/sql/ask.ts` | Text-to-SQL with read-only guardrails, for when vectors are the wrong tool |
+| `src/bible/` + `BIBLE.md` | Chunking challenge: slice the King James Bible yourself, audit your chunks, store and search them |
 | `src/voice/` | A Retell phone agent that answers from your docs, takes messages, and flags emergencies |
 | `VOICE.md` | How Retell works, setup, and the lessons from shipping voice agents to clients |
 | `PROJECTS.md` | What to build, starting inside your own company |
@@ -113,6 +125,7 @@ All of them do the core job. Pick one, learn the concepts, and swapping later is
 - Add LangSmith tracing (`LANGSMITH_TRACING=true` + their OpenAI wrapper) to see cost and latency per step.
 - Write 20 eval questions with expected answers and run them every time you change chunking or prompts.
 - Turn `query.ts` into an agent: let the LLM decide *which* tool to call (vector search vs SQL vs web search).
+- Do the chunking challenge: `BIBLE.md`.
 - Put it on the phone: `VOICE.md`.
 - Pick a project from `PROJECTS.md` and take it all the way to production.
 
