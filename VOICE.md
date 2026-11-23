@@ -52,6 +52,7 @@ caller dials your Retell number
 | `src/voice/agent.ts` | Tool definitions, voice settings, and what to extract after every call |
 | `src/voice/handlers.ts` | What the tools actually do: RAG search, save a message, log a call |
 | `src/voice/server.ts` | Tiny HTTP server Retell calls during the call, plus the webhook after it |
+| `src/voice/conversation.ts` | The tool-calling loop behind text mode and the voice evals |
 | `src/voice/chat.ts` | Text-mode phone call: same prompt, same tools, no Retell, no minutes billed |
 | `src/voice/deploy.ts` | Creates or updates the agent in Retell |
 | `src/voice/call-me.ts` | Has the agent call your phone |
@@ -117,6 +118,6 @@ robocaller.
 1. **Change the business.** Edit `business.ts`, drop the business's actual FAQ into `data/`, set `VOICE_DOCS_SOURCE`, ingest, and test in text mode. That's a demo you can show a business owner tomorrow.
 2. **Book appointments.** Retell has built-in Cal.com tools (`check_availability_cal`, `book_appointment_cal`). Swap them in for "the owner confirms times on the callback."
 3. **Text the owner.** In the `call_analyzed` webhook, send an SMS (Twilio) when `is_emergency` is true.
-4. **Write evals.** Save 20 transcripts of calls that went wrong, replay them through `voice:chat`, and check the agent does the right thing every time you change the prompt.
+4. **Write evals.** `npm run evals:voice` replays scripted calls (in `src/evals/cases.ts`) and checks tool calls, emergency flags and phrases. Turn every call that went wrong into a new case and run it on every prompt change. See `curriculum/06-evals.md`.
 5. **Speed to lead.** Flip it outbound: a form submission triggers a call within 60 seconds (with consent). See `PROJECTS.md`.
 6. **Do it at your company.** Who answers the phone after hours? Who answers the same 30 questions every week? Start there.

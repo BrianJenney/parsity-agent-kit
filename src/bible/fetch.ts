@@ -17,4 +17,4 @@ const text = await res.text();
 writeFileSync(KJV_PATH, text);
 
 console.log(`Wrote ${KJV_PATH} (${(text.length / 1e6).toFixed(1)} MB).`);
-console.log("Next: npm run bible:fixed, then read BIBLE.md.");
+console.log("Next: npm run bible:fixed, then read curriculum/01-data-and-chunking.md.");

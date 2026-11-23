@@ -1,0 +1,20 @@
+[
+  {
+    "id": "req-1",
+    "customer": "Marcus T.",
+    "invoiceTotal": 89,
+    "email": "Your tech showed up, looked at my water heater for 10 minutes, said it needs replacing and charged me $89. I didn't get anything fixed. I want my $89 back."
+  },
+  {
+    "id": "req-2",
+    "customer": "Priya S.",
+    "invoiceTotal": 340,
+    "email": "You replaced the valve under my kitchen sink 3 weeks ago and it's leaking again. This is the second time. Can someone come back out? Honestly I'd rather just get a refund at this point."
+  },
+  {
+    "id": "req-3",
+    "customer": "Dale K.",
+    "invoiceTotal": 1650,
+    "email": "The new water heater you installed in March makes a loud banging noise every morning. I want a full refund of the $1,650, I'm done with it."
+  }
+]

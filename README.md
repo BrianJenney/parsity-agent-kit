@@ -1,135 +1,82 @@
-# Parsity Agent Kit: RAG, Structured Outputs, SQL & Voice
+# Parsity Agent Kit
 
-A free, hackable starter from Brian Jenney ([Parsity](https://parsity.io/ai-dev)).
+Learn AI engineering by building it, with your coding agent as the coach.
 
-It's the pipeline behind almost every production RAG app and agent:
+This repo covers the stuff companies hiring AI engineers actually ask about: chunking, RAG and vector
+search, text-to-SQL, agentic retrieval, structured outputs, human in the loop, evals, observability
+and voice agents. It's built by Brian Jenney ([Parsity](https://parsity.io/ai-dev)) from the patterns
+he uses in production. Treat it as a starting point, not the one right way.
 
-```
-text -> chunk -> embed (OpenAI) -> store (Qdrant + metadata) -> retrieve -> rerank -> answer (structured output)
-```
+## How to use it
 
-It also includes the things most tutorials skip: **filling out a form with structured outputs**,
-**asking whether you even need a vector database** (sometimes you just need SQL), and
-**putting the whole thing on the phone** as a voice agent.
+Open this folder in Claude Code, Cursor, Codex or whatever agent you use, and say:
 
-## Quickstart (~5 minutes)
+> I want to learn AI engineering with this repo. Start the course.
 
-You need Node 20+, Docker, and an OpenAI API key (a $5 credit goes a long way).
+The agent reads `AGENTS.md`, sets you up, asks what you do and why you're here, and walks you through
+`curriculum/` one module at a time. It's set up to coach you, not do it for you: it'll ask you
+questions, have you poke holes in the code, and make you pick an approach before it helps you build.
+Your progress is saved in `.learning/progress.md`, so you can pick up later.
+
+The repo also ships skills (`.claude/skills/`) your agent can use on your own projects afterward:
+chunking strategy, structured output agents, agentic retrieval, human in the loop, evals,
+observability, voice agents, and scoping a project at work.
+
+## The path
+
+| # | Module | You'll build |
+|---|---|---|
+| 00 | [Start](curriculum/00-start.md) | Setup, your goal, the data at your job |
+| 01 | [Data and chunking](curriculum/01-data-and-chunking.md) | Your own chunker for the entire King James Bible |
+| 02 | [Retrieval](curriculum/02-retrieval.md) | Metadata filters, thresholds, reranking, and SQL for when vectors are wrong |
+| 03 | [Structured outputs and prompts](curriculum/03-structured-outputs-and-prompts.md) | LLM output your code can trust |
+| 04 | [Agentic retrieval](curriculum/04-agentic-retrieval.md) | A router that picks SQL, vectors, both or neither |
+| 05 | [Human in the loop](curriculum/05-human-in-the-loop.md) | An agent that proposes refunds and a human who approves |
+| 06 | [Evals](curriculum/06-evals.md) | A test suite with LLM-as-judge and Jev, plus regression tracking |
+| 07 | [Observability](curriculum/07-observability.md) | LangSmith traces for cost, latency and failures |
+| 08 | [Voice](curriculum/08-voice.md) | The agent answering a phone line on Retell |
+| 09 | [Your project](curriculum/09-your-project.md) | A scoped proof of concept for your own company |
+
+## Quickstart (if you want to poke around first)
+
+Needs Node 22+, Docker, and an OpenAI API key (a $5 credit covers the whole course).
 
 ```bash
 git clone https://github.com/BrianJenney/parsity-agent-kit.git
 cd parsity-agent-kit
 npm install
-cp .env.example .env          # add your OPENAI_API_KEY
-npm run db:up                 # starts Qdrant locally -> http://localhost:6333/dashboard
+cp .env.example .env                  # add your OPENAI_API_KEY
+npm run db:up                         # Qdrant -> http://localhost:6333/dashboard
+npm run sql:seed                      # jobs.db: 60 fake AI job postings
+npm run ingest -- data/samples --reset
 
-npm run chunks -- data/samples/municipal-code.md     # preview chunks (free, no API calls)
-npm run ingest -- data/samples --reset               # chunk + embed + store
-npm run query -- "how late can I run a leaf blower on Sunday?"
-npm run query -- "what's the refund policy?" --source support-faq.md --rerank
+npm run agent -- "how many jobs are in Austin, and what's Northwind's diagnostic fee?"
+npm run evals -- --judge none
+npm run voice:chat
 ```
 
-Form filling and SQL:
-
-```bash
-npm run fill-form                      # messy email -> typed form JSON
-npm run sql:seed                       # creates jobs.db (60 fake AI job postings)
-npm run sql:ask -- "average max salary for remote roles by city"
-```
-
-Chunking challenge (chunk the whole King James Bible your way, then search it). Full instructions in `BIBLE.md`:
-
-```bash
-npm run bible:fetch                    # downloads the KJV into data/bible/
-npm run bible:fixed                    # the naive way, so you can see what breaks
-npm run bible:smart                    # your chunker (you write it)
-npm run bible:audit -- data/bible/chunks-smart.jsonl
-npm run bible:ingest -- data/bible/chunks-smart.jsonl --reset
-COLLECTION=bible-kjv npm run query -- "verses about not worrying" --rerank
-```
-
-Voice agent (the RAG pipeline answering a phone line). Start in text mode, then follow `VOICE.md` to put it on Retell:
-
-```bash
-npm run voice:chat                     # text-mode phone call, same prompt and tools
-```
+Every command is listed in `AGENTS.md`.
 
 ## What's in here
 
-| File | What it teaches |
+| Path | What it is |
 |---|---|
-| `src/chunkers.ts` | 4 chunking strategies: fixed, paragraph, sentence, markdown-by-heading. **Start here.** |
-| `src/inspect-chunks.ts` | Look at your chunks *before* paying to embed them |
-| `src/ingest.ts` | Batch embeddings, Qdrant collection setup, payload indexes, metadata |
-| `src/query.ts` | Vector search, metadata filters, score thresholds, over-fetch + rerank, cited answers, human-in-the-loop flag |
-| `src/fill-form.ts` | Structured outputs with Zod: the schema *is* the form |
-| `src/sql/ask.ts` | Text-to-SQL with read-only guardrails, for when vectors are the wrong tool |
-| `src/bible/` + `BIBLE.md` | Chunking challenge: slice the King James Bible yourself, audit your chunks, store and search them |
-| `src/voice/` | A Retell phone agent that answers from your docs, takes messages, and flags emergencies |
-| `VOICE.md` | How Retell works, setup, and the lessons from shipping voice agents to clients |
-| `PROJECTS.md` | What to build, starting inside your own company |
-| `DATA_SOURCES.md` | Where to find data, easy mode and hard mode |
-
-## The loop you should actually do
-
-1. Drop your own text into `data/` (or scrape something with Firecrawl / Crawl4AI).
-2. `npm run chunks -- data/yourfile.md` and read the chunks. Would *you* be able to answer a question from one chunk?
-3. Change `CHUNK_STRATEGY` / `CHUNK_SIZE` in `.env`, or write a new strategy in `chunkers.ts`.
-4. `npm run ingest -- data/yourfile.md --reset` and query it.
-5. Retrieval bad? Go back to step 2. **You'll spend more time on chunking and metadata than on prompts.** That's normal.
-
-## Concepts in 60 seconds
-
-**Chunking:** splitting documents into retrievable pieces. Too big and the embedding gets mushy and
-you waste context. Too small and the chunk loses meaning. Split on the document's natural structure
-(sections, paragraphs) whenever you can.
-
-**Embeddings:** text converted into a vector (here, 1536 numbers) so "similar meaning" becomes
-"close in space." The vector size must match your collection. Change models = re-embed everything.
-
-**Metadata:** everything you store next to the vector: source, section, date, author, customer ID.
-It lets you filter ("only this customer's docs"), cite sources, and debug. Most bad RAG apps skimp here.
-
-**Reranking:** vector search finds text that *sounds* like the question. A reranker reads the question
-and each candidate together and scores actual relevance. Pattern: over-fetch 20, rerank, keep 5.
-Use a dedicated reranker (Cohere, Voyage, cross-encoders) in production; this repo uses an LLM to show the idea.
-
-**Score threshold:** if nothing is similar enough, return nothing. "I don't know" beats a confident hallucination.
-
-**Structured outputs:** the model must return JSON that matches your schema. That's how LLM output
-becomes something code can trust: saved to a DB, posted to an API, used to fill a form.
-
-**Human in the loop:** when confidence is low or a field is missing, ask a person. That's the
-difference between a demo and something a company will put in front of customers.
-
-## Which vector DB?
-
-| | Pick it when |
-|---|---|
-| **pgvector** | You're already on Postgres. Fewest moving parts. Honestly the right default for many teams. |
-| **Pinecone** | Fully managed, zero ops, fast to start. You pay for the convenience. |
-| **Qdrant** | You need heavy metadata filtering and want open source you can self-host or run in their cloud. (Used here.) |
-| **Weaviate** | You want hybrid search (keyword + vector) and built-in modules out of the box. |
-
-All of them do the core job. Pick one, learn the concepts, and swapping later is a weekend.
-
-## Do you even need a vector DB? An LLM?
-
-- Counting, averaging, sorting, exact filters, dates? **SQL.** (`src/sql/ask.ts`)
-- Exact keyword or ID lookups? **Full-text search** (Postgres `tsvector`, BM25).
-- Rule-based routing with 5 known categories? Maybe an **if statement**.
-- Fuzzy "find me things like this" over unstructured text? **Now** you want vectors.
-
-## Next steps
-
-- Add LangSmith tracing (`LANGSMITH_TRACING=true` + their OpenAI wrapper) to see cost and latency per step.
-- Write 20 eval questions with expected answers and run them every time you change chunking or prompts.
-- Turn `query.ts` into an agent: let the LLM decide *which* tool to call (vector search vs SQL vs web search).
-- Do the chunking challenge: `BIBLE.md`.
-- Put it on the phone: `VOICE.md`.
-- Pick a project from `PROJECTS.md` and take it all the way to production.
+| `AGENTS.md` | Instructions for your coding agent: how to coach you, the path, conventions |
+| `curriculum/` | The modules |
+| `.claude/skills/` | Skills your agent can reuse on your own projects |
+| `src/chunkers.ts`, `src/ingest.ts` | Chunking strategies, embedding, storage |
+| `src/rag.ts`, `src/query.ts` | Retrieve, rerank, answer with citations |
+| `src/sql/` | Read-only text-to-SQL with grounding |
+| `src/llm.ts` | Structured outputs with Zod |
+| `src/agent/` | Selector, SQL and document search, aggregator |
+| `src/hitl/` | Propose, hard rules, human approval |
+| `src/evals/` | Eval cases, LLM and Jev judges, runner |
+| `src/observability.ts` | LangSmith tracing |
+| `src/voice/` + `VOICE.md` | Retell phone agent |
+| `src/bible/` | The chunking challenge |
+| `PROJECTS.md`, `DATA_SOURCES.md` | What to build, where to get data |
 
 ---
 
-Want to go deeper with a senior engineer who's shipped this stuff in production?
+Want to go deeper with a senior engineer who's shipped this in production?
 **[parsity.io/ai-dev](https://parsity.io/ai-dev)** (and yes, your company's learning budget can pay for it).
