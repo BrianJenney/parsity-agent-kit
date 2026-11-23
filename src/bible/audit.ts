@@ -1,9 +1,9 @@
 import { existsSync, readFileSync } from "node:fs";
 
-interface AnyChunk {
+type AnyChunk = {
   text: string;
   metadata?: Record<string, unknown>;
-}
+};
 
 const path = process.argv[2];
 if (!path || !existsSync(path)) {

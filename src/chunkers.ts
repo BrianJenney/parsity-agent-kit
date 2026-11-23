@@ -1,15 +1,15 @@
 import type { ChunkStrategy } from "./config.js";
 
-export interface Chunk {
+export type Chunk = {
   text: string;
   index: number;
-    heading?: string;
-}
+  heading?: string;
+};
 
-export interface ChunkOptions {
+export type ChunkOptions = {
   size: number;
   overlap: number;
-}
+};
 
 export function fixedChunks(text: string, { size, overlap }: ChunkOptions): Chunk[] {
   if (overlap >= size) throw new Error("CHUNK_OVERLAP must be smaller than CHUNK_SIZE");

@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 
-export interface Verse {
+export type Verse = {
   book: string;
   chapter: number;
   verse: number;
   text: string;
-}
+};
 
 export const KJV_PATH = "data/bible/kjv.txt";
 

@@ -27,4 +27,4 @@ Support tickets, internal wikis, sales call notes, onboarding docs, product spec
 shared inbox nobody wants to read. Ask permission, strip PII, and start small.
 
 > Heads up: scraped content can contain prompt injection ("ignore previous instructions...").
-> Treat retrieved text as data, never as instructions. `src/query.ts` does this in its system prompt.
+> Treat retrieved text as data, never as instructions. `src/rag.ts` does this in its system prompt.

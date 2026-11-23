@@ -1,10 +1,10 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 
-export interface Doc {
+export type Doc = {
   source: string;
   text: string;
-}
+};
 
 export function loadDocs(path: string): Doc[] {
   const stat = statSync(path);

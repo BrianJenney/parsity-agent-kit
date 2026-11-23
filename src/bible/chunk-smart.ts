@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { loadVerses, type Verse } from "./parse.js";
 
-export interface BibleChunk {
+export type BibleChunk = {
   id: number;
   text: string;
   metadata: {
@@ -11,7 +11,7 @@ export interface BibleChunk {
     verseEnd: number;
     reference: string;
   };
-}
+};
 
 function numberFlag(name: string, fallback: number) {
   const i = process.argv.indexOf(`--${name}`);
