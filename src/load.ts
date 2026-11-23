@@ -2,11 +2,10 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 
 export interface Doc {
-  source: string; // file name, becomes metadata you can filter on
+  source: string;
   text: string;
 }
 
-/** Load a single .txt/.md file, or every .txt/.md file in a folder. */
 export function loadDocs(path: string): Doc[] {
   const stat = statSync(path);
   const files = stat.isDirectory()

@@ -1,7 +1,3 @@
-/**
- * Seed a small SQLite DB of (fake) AI job postings.
- *   npm run sql:seed
- */
 import Database from "better-sqlite3";
 
 const db = new Database("jobs.db");
@@ -12,11 +8,11 @@ db.exec(`
     title TEXT NOT NULL,
     company TEXT NOT NULL,
     city TEXT NOT NULL,
-    remote INTEGER NOT NULL,        -- 0 or 1
-    salary_min INTEGER NOT NULL,    -- USD
+    remote INTEGER NOT NULL,
+    salary_min INTEGER NOT NULL,
     salary_max INTEGER NOT NULL,
-    skills TEXT NOT NULL,           -- comma separated
-    posted_at TEXT NOT NULL         -- ISO date
+    skills TEXT NOT NULL,
+    posted_at TEXT NOT NULL
   );
 `);
 
@@ -36,7 +32,6 @@ const insert = db.prepare(
   "INSERT INTO jobs (title, company, city, remote, salary_min, salary_max, skills, posted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 );
 
-// Deterministic "random" so everyone gets the same data.
 let seed = 42;
 const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
 const pick = <T>(arr: T[]) => arr[Math.floor(rand() * arr.length)];

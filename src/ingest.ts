@@ -1,13 +1,3 @@
-/**
- * INGEST: text -> chunks -> embeddings -> Qdrant
- *
- *   npm run ingest -- data/samples            # whole folder
- *   npm run ingest -- my-file.md --reset      # wipe the collection first
- *
- * Every chunk gets METADATA (source, heading, strategy, etc). Metadata is how you
- * filter ("only search the HR handbook"), debug ("which strategy made this chunk?"),
- * and cite sources in the answer. Don't skip it.
- */
 import { randomUUID } from "node:crypto";
 import { chunk } from "./chunkers.js";
 import { config, embed, qdrant } from "./config.js";
@@ -31,7 +21,6 @@ async function ensureCollection() {
     await db.createCollection(config.collection, {
       vectors: { size: config.embeddingDims, distance: "Cosine" },
     });
-    // Payload indexes make metadata filters fast. Index whatever you'll filter on.
     await db.createPayloadIndex(config.collection, { field_name: "source", field_schema: "keyword" });
     await db.createPayloadIndex(config.collection, { field_name: "strategy", field_schema: "keyword" });
     console.log(`Created collection "${config.collection}" (${config.embeddingDims} dims, cosine)`);

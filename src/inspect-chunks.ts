@@ -1,12 +1,3 @@
-/**
- * Preview chunks WITHOUT embedding anything (free, no API key needed).
- *
- *   npm run chunks -- data/samples/municipal-code.md
- *   CHUNK_STRATEGY=fixed CHUNK_SIZE=300 npm run chunks -- data/samples
- *
- * Look at the output and ask: "If I retrieved only this chunk, could the LLM
- * answer a question about it?" If not, change the strategy before you embed.
- */
 import { chunk } from "./chunkers.js";
 import { config } from "./config.js";
 import { loadDocs } from "./load.js";

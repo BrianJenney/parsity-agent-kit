@@ -1,7 +1,7 @@
 {
   "name": "parsity-agent-kit",
   "version": "1.0.0",
-  "description": "Free starter repo: chunk -> embed -> vector DB -> retrieve -> rerank -> answer, plus a SQL path, a form-filling structured-output demo, and a Retell voice agent on top of the RAG pipeline.",
+  "description": "An agent-first AI engineering starter: chunking, RAG, text-to-SQL, agentic retrieval, structured outputs, human in the loop, evals, observability and voice, with skills and challenges your coding agent can teach you from.",
   "type": "module",
   "private": true,
   "scripts": {
@@ -22,13 +22,19 @@
     "bible:smart": "tsx src/bible/chunk-smart.ts",
     "bible:audit": "tsx src/bible/audit.ts",
     "bible:ingest": "tsx src/bible/ingest.ts",
+    "agent": "tsx src/agent/cli.ts",
+    "hitl:refunds": "tsx src/hitl/refund.ts",
+    "evals": "tsx src/evals/run.ts --suite agent",
+    "evals:voice": "tsx src/evals/run.ts --suite voice",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.12.0",
+    "@typesafe-ai/sdk": "^0.7.0",
     "better-sqlite3": "^11.7.0",
     "dotenv": "^16.4.5",
-    "openai": "^4.77.0",
+    "langsmith": "^0.13.1",
+    "openai": "^7.62.0",
     "retell-sdk": "^6.2.22",
     "zod": "^3.24.1"
   },
@@ -37,5 +43,8 @@
     "@types/node": "^22.10.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

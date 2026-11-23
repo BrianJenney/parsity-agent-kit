@@ -24,7 +24,7 @@ const options = {
 };
 
 export function buildChunks(verses: Verse[], { targetChars, overlapVerses }: typeof options): BibleChunk[] {
-  throw new Error("Your turn: write buildChunks() in src/bible/chunk-smart.ts. The rules are in BIBLE.md.");
+  throw new Error("Your turn: write buildChunks() in src/bible/chunk-smart.ts. The rules are in curriculum/01-data-and-chunking.md.");
 }
 
 const outPath = "data/bible/chunks-smart.jsonl";

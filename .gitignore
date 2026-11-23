@@ -5,3 +5,6 @@ qdrant_storage
 voice-messages.jsonl
 voice-calls.jsonl
 data/bible/
+evals-results/
+refunds-issued.jsonl
+.learning/
