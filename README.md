@@ -4,7 +4,7 @@ Learn AI engineering by building it, with your coding agent as the coach.
 
 This repo covers the stuff companies hiring AI engineers actually ask about: chunking, RAG and vector
 search, text-to-SQL, agentic retrieval, structured outputs, human in the loop, evals, observability
-and voice agents. It's built by Brian Jenney ([Parsity](https://parsity.io/ai-dev)) from the patterns
+and voice agents. It's built by Brian Jenney ([Parsity](https://parsity.io)) from the patterns
 he uses in production. Treat it as a starting point, not the one right way.
 
 ## How to use it
@@ -17,6 +17,8 @@ The agent reads `AGENTS.md`, sets you up, asks what you do and why you're here, 
 `curriculum/` one module at a time. It's set up to coach you, not do it for you: it'll ask you
 questions, have you poke holes in the code, and make you pick an approach before it helps you build.
 Your progress is saved in `.learning/progress.md`, so you can pick up later.
+
+Something not working? `npm run doctor` checks your setup and prints the fix for each thing that's missing.
 
 The repo also ships skills (`.claude/skills/`) your agent can use on your own projects afterward:
 chunking strategy, structured output agents, agentic retrieval, human in the loop, evals,
@@ -73,10 +75,13 @@ Every command is listed in `AGENTS.md`.
 | `src/evals/` | Eval cases, LLM and Jev judges, runner |
 | `src/observability.ts` | LangSmith tracing |
 | `src/voice/` + `VOICE.md` | Retell phone agent |
+| `src/doctor.ts` | `npm run doctor`: checks your setup |
 | `src/bible/` | The chunking challenge |
 | `PROJECTS.md`, `DATA_SOURCES.md` | What to build, where to get data |
 
 ---
 
 Want to go deeper with a senior engineer who's shipped this in production?
-**[parsity.io/ai-dev](https://parsity.io/ai-dev)** (and yes, your company's learning budget can pay for it).
+**[parsity.io](https://parsity.io)** (and yes, your company's learning budget can pay for it).
+
+Stuck, or not sure what to build at your job? **[Grab 15 minutes with Brian](https://calendly.com/brianjenney83/15-minute-meeting-your-web-dev-roadmap-clone)** and bring the question.

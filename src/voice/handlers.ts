@@ -36,13 +36,13 @@ export async function searchDocs({ question }: { question: string }) {
   return { found: true, passages };
 }
 
-export interface Message {
+export type Message = {
   caller_name: string;
   callback_number: string;
   location: string;
   issue: string;
   is_emergency: boolean;
-}
+};
 
 export function takeMessage(message: Message, callId?: string) {
   const record = { ...message, call_id: callId ?? null, taken_at: new Date().toISOString() };

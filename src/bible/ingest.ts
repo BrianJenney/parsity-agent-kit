@@ -3,11 +3,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename } from "node:path";
 import { config, embed, qdrant } from "../config.js";
 
-interface IngestChunk {
+type IngestChunk = {
   id?: number;
   text: string;
   metadata?: { reference?: string; book?: string; chapter?: number; verseStart?: number; verseEnd?: number };
-}
+};
 
 const args = process.argv.slice(2);
 const flag = (name: string) => {

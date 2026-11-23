@@ -5,6 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "doctor": "tsx src/doctor.ts",
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
     "chunks": "tsx src/inspect-chunks.ts",
