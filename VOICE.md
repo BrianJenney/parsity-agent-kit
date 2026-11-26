@@ -56,6 +56,8 @@ caller dials your Retell number
 | `src/voice/chat.ts` | Text-mode phone call: same prompt, same tools, no Retell, no minutes billed |
 | `src/voice/deploy.ts` | Creates or updates the agent in Retell |
 | `src/voice/call-me.ts` | Has the agent call your phone |
+| `src/voice/phonic/dave.ts` | Dave, the Phonic demo agent: prompt, voice and settings as code |
+| `src/voice/phonic/deploy.ts` | Shows what changed versus the live agent, then updates it on Phonic |
 
 ## Run it
 
@@ -106,6 +108,26 @@ scars:
 - **Spam is real.** Some of your calls will be people selling SEO. The prompt ends those fast.
 - **Turn down the noise.** `denoising_mode` in `agent.ts` filters background chatter. Without it, the agent answers the TV.
 - **Extract structured data after every call.** `post_call_analysis_data` in `agent.ts` turns every transcript into fields you can count. `docs_missing_answer` is the most useful one: it tells you exactly what to add to the docs next.
+
+## Dave: the same idea on Phonic
+
+`src/voice/phonic/dave.ts` is a second agent, on [Phonic](https://phonic.ai) instead of Retell: Dave, the
+way-too-into-pipes guy at Northwind's front desk who books appointments and tells one plumbing pun per turn.
+He's the demo from the video. His open times are written into the prompt, so he doesn't touch a real calendar.
+
+The point of him is the workflow: the agent is a file in git, and changing him is a code change.
+
+1. Edit `dave.ts`. The personality, the open slots, the voice and the welcome line are all plain values.
+2. `npm run voice:phonic -- --dry-run` compares the file to what's live and prints each field that changed. Nothing is sent.
+3. `npm run voice:phonic` pushes the change. The phone number stays the same.
+4. Call the number it prints and hear the change.
+
+Things worth trying: swap `voice_id` (`grant`, `mason`, `jackson`, `sabrina`), change `openSlots`, make him
+grumpy instead of funny, set `turn_taking` to `"patient"` and see how interruptions feel, or change the
+emergency rule and test it by calling about a flooded basement.
+
+Needs `PHONIC_API_KEY` in `.env`. The first deploy on your own Phonic account creates the agent and gets it a
+new number; after that, deploys update it in place.
 
 ## Outbound calls
 

@@ -18,6 +18,7 @@
     "voice:server": "tsx src/voice/server.ts",
     "voice:deploy": "tsx src/voice/deploy.ts",
     "voice:call": "tsx src/voice/call-me.ts",
+    "voice:phonic": "tsx src/voice/phonic/deploy.ts",
     "bible:fetch": "tsx src/bible/fetch.ts",
     "bible:fixed": "tsx src/bible/chunk-fixed.ts",
     "bible:smart": "tsx src/bible/chunk-smart.ts",

@@ -44,6 +44,10 @@ Then put it on a phone with Retell by following `VOICE.md` (`voice:server`, a tu
 - `search_docs` returns raw passages and lets the voice model summarize. Would a pre-written short answer be faster to speak?
 - The agent can't book appointments. What would it take? (Retell has Cal.com tools. That's also a human-in-the-loop question: does the owner confirm?)
 
+## Bonus: update Dave
+
+`src/voice/phonic/dave.ts` is a second agent on Phonic. Change something about him, run `npm run voice:phonic -- --dry-run` to see the diff against what's live, then deploy and call him. See the Dave section of `VOICE.md`.
+
 ## Challenge
 
 1. Write a voice eval case that fails today. (Ideas: a caller who switches to Spanish, a caller who gives the number in one breath, a caller who asks to talk to a human.)

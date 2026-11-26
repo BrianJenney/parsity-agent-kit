@@ -94,20 +94,21 @@ npm run hitl:refunds                   # agent proposes, you approve
 npm run evals                          # agent eval suite (add -- --judge jev or -- --judge none)
 npm run evals:voice                    # voice agent scenarios
 npm run voice:chat                     # text-mode phone call
+npm run voice:phonic -- --dry-run      # what would change on Dave, the Phonic demo agent
 
 npm run bible:fetch | bible:fixed | bible:smart | bible:audit -- <file> | bible:ingest -- <file>
 npm run typecheck
 ```
 
 Needs Node 22+, Docker, and an OpenAI key. Jev (`TYPESAFE_API_KEY`), LangSmith (`LANGSMITH_API_KEY`)
-and Retell (`RETELL_API_KEY`) are optional and only needed in their modules.
+Retell (`RETELL_API_KEY`) and Phonic (`PHONIC_API_KEY`) are optional and only needed in their modules.
 
 ## Things that will trip you up
 
 - **`npm run hitl:refunds` and `npm run voice:chat` wait for typed input.** Don't run them yourself in a shell with no stdin; they'll hang. Have the developer run them in their own terminal (in Claude Code: `! npm run voice:chat`) and tell you what happened. The approval is theirs to give anyway.
 - **`npm run bible:smart` throws on purpose** until they write `buildChunks()`. That's the module 01 challenge, not a bug. Don't fix it for them. Same for `src/agent/chat.ts` in module 04: it doesn't exist until they build it.
 - **`npm run evals` exits 1 when the pass rate is under `EVAL_PASS_RATE`.** A failing case is information. Read which checks failed before you change anything, and never edit a case just to make it pass.
-- **Ask before anything that costs money or leaves the laptop:** the full Bible ingest, judged eval runs, `voice:deploy`, and above all `voice:call` (it dials a phone number).
+- **Ask before anything that costs money or leaves the laptop:** the full Bible ingest, judged eval runs, `voice:deploy`, `voice:phonic` without `--dry-run`, and above all `voice:call` (it dials a phone number).
 - **Never print, commit or paste `.env`.** Check that a key is set, not what it is. `doctor` does this for you.
 - **Qdrant needs Docker running.** If `db:up` fails, offer Qdrant Cloud's free tier (`QDRANT_URL` and `QDRANT_API_KEY` in `.env`) instead of debugging Docker for an hour.
 - **Their work data stays out of prompts until they say it's cleared.** Fake or anonymized data first.
@@ -125,7 +126,7 @@ and Retell (`RETELL_API_KEY`) are optional and only needed in their modules.
 | `src/evals/` | Cases, deterministic checks, LLM and Jev judges, regression tracking |
 | `src/observability.ts` | LangSmith tracing wrapper |
 | `src/doctor.ts` | Setup check behind `npm run doctor` |
-| `src/voice/` | Retell phone agent, text-mode simulator |
+| `src/voice/` | Retell phone agent, text-mode simulator, and Dave on Phonic (`src/voice/phonic/`) |
 | `src/bible/` | Chunking challenge |
 | `data/samples/` | Fictional city code and plumbing company FAQ |
 | `curriculum/` | The modules |
